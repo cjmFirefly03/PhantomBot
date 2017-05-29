@@ -48,9 +48,24 @@
 
         if (panelHasQuery(msgObject)) {
             if (panelCheckQuery(msgObject, 'points_toplist')) {
-                $("#topListAmountPoints").val(msgObject['results']['topListAmountPoints']);
+                for (idx in msgObject['results']) {
+                    console.log(msgObject);
+                    var key = "",
+                        value = "";
+                    key = idx;
+                    value = msgObject['results'][idx];
+                    console.log(key);
+                    console.log(value);
+                    if (panelMatch(key, 'topListAmountPoints')) {
+                        $("#topListAmountPoints").val(value);
+                    }
+                    else if (panelMatch(key, excludedUsers)) {
+                        $("#excludedUsers").val(value);
+                    }
+                }
             }
             if (panelCheckQuery(msgObject, 'points_settings')) {
+                console.log(msgObject['results']);
                 for (idx in msgObject['results']) {
                     var key = "",
                         value = "";
@@ -212,6 +227,7 @@
         sendDBKeys("points_settings", "pointSettings");
         sendDBKeys("points_pointstable", "points");
         sendDBQuery("points_toplist", "settings", "topListAmountPoints");
+        sendDBQuery("points_toplist", "settings", "excludedUsers");
         sendDBKeys("points_grouppoints", "grouppoints");
         sendDBQuery("points_pricecommods", "settings", "pricecomMods");
         sendDBKeys("points_grouppointsoffline", "grouppointsoffline");
@@ -223,6 +239,7 @@
     function doLiteQuery() {
         sendDBKeys("points_settings", "pointSettings");
         sendDBQuery("points_toplist", "settings", "topListAmountPoints");
+        sendDBQuery("points_toplist", "settings", "excludedUsers");
         sendDBKeys("points_grouppoints", "grouppoints");
         sendDBQuery("points_pricecommods", "settings", "pricecomMods");
         sendDBKeys("points_grouppointsoffline", "grouppointsoffline");
@@ -438,6 +455,15 @@
         setTimeout(function() { sendCommand('reloadtop'); }, TIMEOUT_WAIT_TIME);
     }
 
+    function setExcludedUsers() {
+        var val = $('#excludedUsers').val();
+        if (val.length != 0) {
+            sendDBUpdate("points_toplist", "settings", "excludedUsers", val);
+        }
+        setTimeout(function() { doLiteQuery(); }, TIMEOUT_WAIT_TIME);
+        setTimeout(function() { sendCommand('reloadtop'); }, TIMEOUT_WAIT_TIME);
+    }
+
     /**
      * @function toggleModPriceCom
      */
@@ -490,4 +516,5 @@
     $.toggleModPriceCom = toggleModPriceCom;
     $.setInterval = setInterval;
     $.setPointsMessage = setPointsMessage;
+    $.setExcludedUsers = setExcludedUsers;
 })();

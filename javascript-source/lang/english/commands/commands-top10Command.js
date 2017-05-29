@@ -1,4 +1,5 @@
 $.lang.register('top5.default', 'Top $1 $2: $3');
+$.lang.register('top5.alltime', 'Top $1 All Time $2: $3')
 $.lang.register('top5.points-disabled', 'Points are disabled.');
 $.lang.register('top5.amount.points.usage', 'Usage: !topamount (amount) - Set how many viewers will appear in the !top points list.');
 $.lang.register('top5.amount.max', 'The max amount of users is 15.');

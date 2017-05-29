@@ -45,9 +45,15 @@ public class RevloConverter {
 			while ((brLine = bufferedReader.readLine()) != null) {
 				if (i++ > 0) {
 					String[] spl = brLine.split(",");
-					
-					db.set("points", spl[0].toLowerCase(), spl[2]);
-					com.gmt2001.Console.out.println("Imported: " + spl[0] + " - Points: " + spl[2]);
+					String username = spl[0].toLowerCase();
+					if (!db.exists("points", username)) {
+						db.set("points", username, spl[2]);
+						com.gmt2001.Console.out.println("Imported: " + username + " - Points: " + spl[2]);
+					}
+					if (!db.exists("alltimepoints", username)) {
+						db.set("alltimepoints", username, spl[3]);
+						com.gmt2001.Console.out.println("Imported: " + username + " - All Time Points: " + spl[3]);
+					}
 				}
 			}
 

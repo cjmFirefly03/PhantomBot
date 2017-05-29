@@ -4,9 +4,10 @@
  * Build and announce lists of top viewers (Highest points, highest time spent in the channel)
  */
 (function() {
-    var bots = ['moobot', 'nightbot', 'xanbot', 'hnlbot', 'ohbot', 'wizebot', 'vivbot', 'coebot', 'branebot', 'monstercat', 'curseappbot', 'revlobot', 'muxybot'], // Add your own name that you want to be in the list here.
+    var bots = ['moobot', 'nightbot', 'xanbot', 'hnlbot', 'ohbot', 'wizebot', 'vivbot', 'coebot', 'branebot', 'monstercat', 'curseappbot', 'revlobot', 'muxybot', 'cortexnetworkbot'], // Add your own name that you want to be in the list here.
         amountPoints = $.getSetIniDbNumber('settings', 'topListAmountPoints', 5),
-        amountTime = $.getSetIniDbNumber('settings', 'topListAmountTime', 5);
+        amountTime = $.getSetIniDbNumber('settings', 'topListAmountTime', 5),
+        excludedUsers = $.getSetIniDbString('settings', 'excludedUsers', '');
 
     /*
      * @function reloadTop
@@ -14,6 +15,7 @@
     function reloadTop() {
         amountPoints = $.getIniDbNumber('settings', 'topListAmountPoints');
         amountTime = $.getIniDbNumber('settings', 'topListAmountTime');
+        excludedUsers = $.getIniDbString('settings', 'excludedUsers');
     }
 
     /*
@@ -24,6 +26,14 @@
     function isTwitchBot(username) {
         for (var i in bots) {
             if (bots[i].equalsIgnoreCase(username)) {
+                return true;
+            }
+        }
+
+        var users = excludedUsers.split(",");
+        for (var i in users) {
+            var user = users[i].trim();
+            if (user.equalsIgnoreCase(username)) {
                 return true;
             }
         }
@@ -54,7 +64,7 @@
             return (b.value - a.value);
         });
 
-        if (iniName == 'points') {
+        if (iniName == 'points' || iniName == 'alltimepoints') {
             return list.splice(0, amountPoints);
         } else {
             return list.splice(0, amountTime);
@@ -87,6 +97,23 @@
             }
 
             $.say($.lang.get('top5.default', amountPoints, $.pointNameMultiple, top.join(', ')));
+            return;
+        }
+
+        if (command.equalsIgnoreCase('leaderboard')) {
+            if (!$.bot.isModuleEnabled('./systems/pointSystem.js')) {
+                return;
+            }
+
+            var temp = getTop5('alltimepoints'),
+                top = [],
+                i;
+
+            for (i in temp) {
+                top.push((parseInt(i) + 1) + '. ' + $.resolveRank(temp[i].username) + ' ' + $.getPointsString(temp[i].value));
+            }
+
+            $.say($.lang.get('top5.alltime', amountPoints, $.pointNameMultiple, top.join(', ')));
             return;
         }
 
@@ -157,5 +184,6 @@
         $.registerChatCommand('./commands/topCommand.js', 'topamount', 1);
         $.registerChatCommand('./commands/topCommand.js', 'toptimeamount', 1);
         $.registerChatCommand('./commands/topCommand.js', 'reloadtop', 1);
+        $.registerChatCommand('./commands/topCommand.js', 'leaderboard', 7);
     });
 })();

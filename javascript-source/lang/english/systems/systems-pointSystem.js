@@ -6,6 +6,7 @@ $.lang.register('pointsystem.add.error.negative', 'You can not give negative $1.
 $.lang.register('pointsystem.take.error.negative', 'You can not take negative $1.');
 $.lang.register('pointsystem.add.success', 'Sent $1 to $2. New balance is $3.');
 $.lang.register('pointsystem.add.usage', 'Usage: !points add [name] [amount]');
+$.lang.register('pointsystem.bonus.alias.usage', 'Usage: !bonus [name or all] [amount]');
 $.lang.register('pointsystem.user.success', ' $1 currently has $2.');
 $.lang.register('pointsystem.makeitrain.error.invalid', 'Sorry, but it\'s not possible to rain $1 at the moment.');
 $.lang.register('pointsystem.makeitrain.error.needpoints', 'You can not afford to make it rain $1.');
@@ -46,6 +47,7 @@ $.lang.register('pointsystem.err.negative', 'You can not gift less then 0 $1');
 $.lang.register('pointsystem.err.penalty', 'Usage: !penalty (user) (time in minutes)');
 $.lang.register('pointsystem.penalty.set', 'User: $1 will not gain points for the next $2.');
 $.lang.register('pointsystem.reset.all', 'All points were deleted.');
+$.lang.register('pointsystem.reset.alltime', 'All Time records were deleted.');
 $.lang.register('pointsystem.message.usage', 'Usage: !points setmessage [message] - Tags: (userprefix), (user), (points), (pointsname), (pointsstring), (time), and (rank)');
 $.lang.register('pointsystem.message.set', 'Points message set to: $1');
 $.lang.register('pointsystem.active.bonus.usage', 'Usage: !points setactivebonus [amount]');

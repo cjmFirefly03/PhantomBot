@@ -116,6 +116,16 @@
     };
 
     /**
+     * @function getAllTimeUserPoints
+     * @export $
+     * @param {string} username
+     * @returns {*}
+     */
+    function getAllTimeUserPoints(username) {
+        return ($.inidb.exists('alltimepoints', username.toLowerCase()) ? parseInt($.inidb.get('alltimepoints', username.toLowerCase())) : 0);
+    };
+
+    /**
      * @function getPointsString
      * @export $
      * @param {Number} points
@@ -136,6 +146,7 @@
             uUsers = [],
             username,
             amount,
+            alltimeamount,
             i;
 
         if (!$.bot.isModuleEnabled('./systems/pointSystem.js')) {
@@ -145,12 +156,14 @@
         if ($.isOnline($.channelName)) {
             if (onlinePayoutInterval > 0 && (lastPayout + (onlinePayoutInterval * 6e4)) <= now) {
                 amount = onlineGain;
+                alltimeamount = onlineGain;
             } else {
                 return;
             }
         } else {
             if (offlinePayoutInterval > 0 && (lastPayout + (offlinePayoutInterval * 6e4)) <= now) {
                 amount = offlineGain;
+                alltimeamount = offlineGain;
             } else {
                 return;
             }
@@ -215,6 +228,7 @@
 
             if (!getUserPenalty(username)) {
                 $.inidb.incr('points', username, amount);
+                $.inidb.incr('alltimepoints', username, alltimeamount);
                 uUsers.push(username + '(' + amount + ')');
             }
         }
@@ -674,6 +688,10 @@
                     $.inidb.RemoveFile('points');
                     $.say($.whisperPrefix(sender) + $.lang.get('pointsystem.reset.all'));
                 }
+                else if (action.equalsIgnoreCase('resetalltime')) {
+                    $.inidb.RemoveFile('alltimepoints');
+                    $.say($.whisperPrefix(sender) + $.lang.get('pointsystem.reset.alltime'));
+                }
 
                 /**
                  * @commandpath points setactivebonus [points] - Sets a bonus amount of points user get if they are active between the last payout.
@@ -692,6 +710,36 @@
             }
         }
 
+
+        if (command.equalsIgnoreCase('bonus')) {
+            actionArg1 = (args[0] + '').toLowerCase();
+            actionArg2 = parseInt(args[1]);
+            if (isNaN(actionArg2)) {
+                $.say($.whisperPrefix(sender) + $.lang.get('pointsystem.bonus.alias.usage'));
+                return;
+            }
+
+            if (actionArg1.equalsIgnoreCase('all')) {
+                giveAll(actionArg2, sender);
+                return;
+            }
+
+            if (!actionArg1 || !$.user.isKnown(actionArg1)) {
+                $.say($.whisperPrefix(sender) + $.lang.get('common.user.404', actionArg1));
+                return;
+            }
+
+            if (actionArg2 < 0) {
+                $.say($.whisperPrefix(sender) + $.lang.get('pointsystem.add.error.negative', pointNameMultiple));
+                return;
+            }
+
+            if ($.user.isKnown(actionArg1)) {
+                $.inidb.incr('points', actionArg1, actionArg2);
+                $.say($.lang.get('pointsystem.add.success',
+                    $.getPointsString(actionArg2), $.username.resolve(actionArg1), getPointsString(getUserPoints(actionArg1))));
+            }
+        }
 
         /**
          * @commandpath makeitrain [amount] - Send a random amount of points to each user in the channel
@@ -780,6 +828,7 @@
             $.registerChatCommand('./systems/pointSystem.js', 'points', 7);
             $.registerChatCommand('./systems/pointSystem.js', 'gift', 7);
             $.registerChatCommand('./systems/pointSystem.js', 'penalty', 2);
+            $.registerChatCommand('./systems/pointSystem.js', 'bonus', 7);
 
             $.registerChatSubcommand('points', 'add', 1);
             $.registerChatSubcommand('points', 'give', 1);

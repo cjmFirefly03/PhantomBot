@@ -93,6 +93,12 @@
             <button type="button" class="btn btn-primary inline pull-right" onclick="$.topListPoints()">Update</button>
             <input type="number" min="0" class="form-control" id="topListAmountPoints" placeholder="Amount" />
         </div>
+        <div class="form-group" onkeypress="return event.keyCode != 13">
+            <label for="excludedUsers">Excluded Users From Top List</label>
+            <p>This is a comma separated list</p>
+            <button type="button" class="btn btn-primary inline pull-right" onclick="$.setExcludedUsers()">Update</button>
+            <textarea class="form-control" id="excludedUsers" placeholder="excluded users" />
+        </div>
     </div>
     </div>
     
