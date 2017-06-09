@@ -521,7 +521,7 @@
     var interval = setInterval(function() {
         if (isConnected && TABS_INITIALIZED) {
             var active = $("#tabs").tabs("option", "active");
-            if (active == 7) {
+            if (active == 8) {
                 doQuery();
                 clearInterval(interval);
             }
@@ -531,7 +531,7 @@
     // Query the DB every 30 seconds for updates.
     setInterval(function() {
         var active = $('#tabs').tabs('option', 'active');
-        if (active == 7 && isConnected && !isInputFocus()) {
+        if (active == 8 && isConnected && !isInputFocus()) {
             newPanelAlert('Refreshing Greeting Data', 'success', 1000);
             doQuery();
         }

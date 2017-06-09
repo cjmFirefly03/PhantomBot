@@ -1,0 +1,78 @@
+<!--
+
+ Copyright (C) 2017 phantombot.tv
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+ @author cjmfirefly03
+-->
+
+<!-- This is outside of the accordion, so will always be on top of the tab -->
+
+<!-- Accordion object.  Each section is separated by an <h3 /> header and the content is to be enclosed in <div />.  -->
+<div id="rewardsAccordion">
+    <h3>Default Rewards</h3>
+    <div>
+        <div id="_rewardsDefaultConfigPanelDisabled" />
+        <div id="_rewardsDefaultConfigPanel">
+            <div>
+                <div id="defaultRewardsList" style="height: 420px; overflow: auto;" />
+            </div>
+        </div>
+    </div>
+    <h3>Custom Rewards</h3>
+    <div>
+        <div id="_rewardsConfigPanelDisabled" />
+        <div id="_rewardsConfigPanel">
+            <div class="form-group" onkeypress="return event.keyCode != 13">
+                <label>Create Reward</label>
+                <button type="button" class="btn btn-primary inline pull-right" onclick="$.setupReward()">Submit</button>
+                <input type="text" data-toggle="tooltip" title="Reward Name, this must be unique" class="form-control"
+                       id="setupRewardName" placeholder="Name" />
+                <input type="text" data-toggle="tooltip" title="Reward Description" class="form-control"
+                       id="setupRewardDescription" placeholder="Decription" />
+                <input type="text" data-toggle="tooltip" title="Reward Cost" class="form-control"
+                       id="setupRewardCost" placeholder="How much currency does the reward cost?" />
+                <input type="text" data-toggle="tooltip" title="Alias Command besides Name" class="form-control"
+                       id="setupRewardCommand" placeholder="Bot Command" />
+                <input type="text" data-toggle="tooltip" title="Time Limit between redemptions" class="form-control"
+                       id="setupRewardCooldown" placeholder="Cooldown" />
+                <input type="text" data-toggle="tooltip" title="How many of these rewards can your viewers redeem?" class="form-control"
+                       id="setupRewardMaxRedemptions" placeholder="Max Redemptions" />
+                <input type="text" data-toggle="tooltip" title="Limits Per Viewer" class="form-control"
+                       id="setupeRewardViewerLimit" placeholder="Limits per viewer" />
+            </div>
+            <div>
+                <div id="rewardsList" style="height: 420px; overflow: auto;" />
+            </div>
+        </div>
+    </div>
+
+    <h3>Redemptions</h3>
+    <div>
+        <div id="_redemptionConfigPanelDisabled" />
+        <div id="_redemptionConfigPanel">
+            <div>
+                <span id="redemptionTableTitle">Redemption Table</span>
+            </div>
+            <br>
+            <div id="redemptionTable" style="height: 510px; overflow: auto;" />
+        </div>
+    </div>
+</div>
+
+<!-- Run the Acordion -->
+<script>$("#rewardsAccordion").accordion( { clearStyle: true, heightStyle: "panel", icons: null } );</script>
+<script>$('[data-toggle="tooltip"]').tooltip({ trigger: 'hover' });</script>
+<script>handleInputFocus();</script>

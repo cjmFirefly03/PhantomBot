@@ -377,7 +377,7 @@
     var interval = setInterval(function() {
         if (isConnected && TABS_INITIALIZED) {
             var active = $("#tabs").tabs("option", "active");
-            if (active == 5) {
+            if (active == 6) {
                 doQuery();
                 clearInterval(interval);
             }
@@ -388,7 +388,7 @@
 /*
     setInterval(function() {
         var active = $("#tabs").tabs("option", "active");
-        if (active == 5 && isConnected && !isInputFocus()) {
+        if (active == 6 && isConnected && !isInputFocus()) {
             newPanelAlert('Refreshing Viewers Data', 'success', 1000);
             doQuery();
         }

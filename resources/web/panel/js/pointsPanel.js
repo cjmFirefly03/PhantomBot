@@ -49,13 +49,10 @@
         if (panelHasQuery(msgObject)) {
             if (panelCheckQuery(msgObject, 'points_toplist')) {
                 for (idx in msgObject['results']) {
-                    console.log(msgObject);
                     var key = "",
                         value = "";
                     key = idx;
                     value = msgObject['results'][idx];
-                    console.log(key);
-                    console.log(value);
                     if (panelMatch(key, 'topListAmountPoints')) {
                         $("#topListAmountPoints").val(value);
                     }
@@ -65,7 +62,6 @@
                 }
             }
             if (panelCheckQuery(msgObject, 'points_settings')) {
-                console.log(msgObject['results']);
                 for (idx in msgObject['results']) {
                     var key = "",
                         value = "";

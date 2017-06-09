@@ -110,6 +110,7 @@ connection.onmessage = function(e) {
     if (e.data.indexOf('moderation_') !== -1) $.moderationOnMessage(e);
     if (e.data.indexOf('time_') !== -1) $.timeOnMessage(e);
     if (e.data.indexOf('points_') !== -1) $.pointsOnMessage(e);
+    if (e.data.indexOf('rewards_') !== -1) $.rewardsOnMessage(e);
     if (e.data.indexOf('viewers_') !== -1) $.viewersOnMessage(e);
     if (e.data.indexOf('ranks_') !== -1) $.ranksOnMessage(e);
     if (e.data.indexOf('greetings_') !== -1) $.greetingsOnMessage(e);

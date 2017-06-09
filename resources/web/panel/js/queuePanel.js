@@ -123,7 +123,7 @@
     /* Query the DB every 20 seconds for updates. */
     setInterval(function() {
         var active = $('#tabs').tabs('option', 'active');
-        if (active == 16 && isConnected && !isInputFocus()) {
+        if (active == 17 && isConnected && !isInputFocus()) {
             newPanelAlert('Refreshing Queue Data', 'success', 1000);
             doQuery();
         }

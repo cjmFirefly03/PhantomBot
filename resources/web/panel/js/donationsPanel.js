@@ -164,7 +164,7 @@
     var interval = setInterval(function() {
         if (isConnected && TABS_INITIALIZED) {
             var active = $('#tabs').tabs('option', 'active');
-            if (active == 8) {
+            if (active == 9) {
                 doQuery();
                 clearInterval(interval);
             }
@@ -174,7 +174,7 @@
     // Query the DB every 30 seconds for updates.
     setInterval(function() {
         var active = $('#tabs').tabs('option', 'active');
-        if (active == 8 && isConnected && !isInputFocus()) {
+        if (active == 9 && isConnected && !isInputFocus()) {
             newPanelAlert('Refreshing Donations Data', 'success', 1000);
             doQuery();
         }

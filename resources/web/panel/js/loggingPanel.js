@@ -76,7 +76,7 @@
     // Load the DB items for this panel, wait to ensure that we are connected.
     var interval = setInterval(function() {
         var active = $("#tabs").tabs("option", "active");
-        if (active == 5 && isConnected) {
+        if (active == 6 && isConnected) {
             doQuery();
             clearInterval(interval); 
         }
@@ -85,7 +85,7 @@
     // Query the DB every 30 seconds for updates.
     setInterval(function() {
         var active = $("#tabs").tabs("option", "active");
-        if (active == 5 && isConnected && !isInputFocus()) {
+        if (active == 6 && isConnected && !isInputFocus()) {
             newPanelAlert('Refreshing Logging Data', 'success', 1000);
             doQuery();
         }
