@@ -1032,9 +1032,9 @@
     });
     
     /*
-     * @event panelWebSocket
+     * @event webPanelSocketUpdate
      */
-    $.bind('panelWebSocket', function(event) {
+    $.bind('webPanelSocketUpdate', function(event) {
         if (event.getScript().equalsIgnoreCase('./commands/customCommands.js')) {
             if (event.getArgs()[0] == 'remove') {
                 if (customCommands[event.getArgs()[1].toLowerCase()] !== undefined) {
