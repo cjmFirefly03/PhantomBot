@@ -828,7 +828,7 @@
             $.registerChatCommand('./systems/pointSystem.js', 'points', 7);
             $.registerChatCommand('./systems/pointSystem.js', 'gift', 7);
             $.registerChatCommand('./systems/pointSystem.js', 'penalty', 2);
-            $.registerChatCommand('./systems/pointSystem.js', 'bonus', 7);
+            $.registerChatCommand('./systems/pointSystem.js', 'bonus', 1);
 
             $.registerChatSubcommand('points', 'add', 1);
             $.registerChatSubcommand('points', 'give', 1);
