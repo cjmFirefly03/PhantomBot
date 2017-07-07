@@ -47,7 +47,7 @@
      * @returns {Array}
      */
     function getTop5(iniName) {
-        var keys = $.inidb.GetKeysByOrderValue(iniName, '', 'DESC', 0, 25),
+        var keys = $.inidb.GetKeysByOrderValue(iniName, '', 'DESC', (iniName.equals('points') ? amountPoints + 1 : amountTime + 1), 0),
             list = [],
             i;
 
