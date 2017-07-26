@@ -391,21 +391,19 @@
 	});
 
 	$.bind('initReady', function() {
-		if ($.bot.isModuleEnabled('./systems/queueSystem.js')) {
-			$.registerChatCommand('./systems/queueSystem.js', 'queue', 7);
-			$.registerChatCommand('./systems/queueSystem.js', 'queueadmin', 7);
 
-			$.registerChatSubcommand('queueadmin', 'open', 1);
-			$.registerChatSubcommand('queueadmin', 'close', 1);
-			$.registerChatSubcommand('queueadmin', 'clear', 1);
-			$.registerChatSubcommand('queueadmin', 'remove', 1);
-			$.registerChatSubcommand('queueadmin', 'pick', 1);
-			$.registerChatSubcommand('queue', 'list', 7);
-			$.registerChatSubcommand('queue', 'next', 7);
-			$.registerChatSubcommand('queue', 'info', 7);
-			$.registerChatSubcommand('queue', 'position', 7);
-			$.registerChatSubcommand('queue', 'leave', 7);
-		}
+		$.registerChatCommand('./systems/queueSystem.js', 'joinqueue', 7);
+		$.registerChatCommand('./systems/queueSystem.js', 'queue', 7);
+		
+		$.registerChatSubcommand('queue', 'open', 1);
+		$.registerChatSubcommand('queue', 'close', 1);
+		$.registerChatSubcommand('queue', 'clear', 1);
+		$.registerChatSubcommand('queue', 'remove', 1);
+		$.registerChatSubcommand('queue', 'pick', 1);
+		$.registerChatSubcommand('queue', 'list', 7);
+		$.registerChatSubcommand('queue', 'next', 7);
+		$.registerChatSubcommand('queue', 'info', 7);
+		$.registerChatSubcommand('queue', 'position', 7);
 	});
 
 	/**
