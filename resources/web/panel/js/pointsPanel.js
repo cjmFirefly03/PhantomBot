@@ -476,7 +476,6 @@
         } else {
             sendDBUpdate("points_modprice", "settings", "pricecomMods", "true");
         }
-        sendCommand('reloadinit');
         setTimeout(function() { doLiteQuery(); }, TIMEOUT_WAIT_TIME);
     }
 
