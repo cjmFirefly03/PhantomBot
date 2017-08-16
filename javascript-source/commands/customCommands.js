@@ -66,6 +66,21 @@
             }
         }
 
+        if (message.match(/\(readfile/)) {
+            if (message.search(/\((readfile ([^)]+)\))/g) >= 0) {
+                message = $.replace(message, '(' + RegExp.$1, $.readFile('./addons/' + RegExp.$2)[0]);
+            }
+        }
+
+        if (message.match(/\(readfilerand/)) {
+            if (message.search(/\((readfilerand ([^)]+)\))/g) >= 0) {
+                var path = RegExp.$2;
+                var path2 = RegExp.$1;
+                var results = $.arrayShuffle($.readFile('./addons/' + path.trim()));
+                message = $.replace(message, '(' + path2.trim(), $.randElement(results));
+            }
+        }
+
         if (message.match(/\(adminonlyedit\)/)) {
             message = $.replace(message, '(adminonlyedit)', '');
         }
@@ -273,21 +288,6 @@
             if (message == '') return null;
         }
 
-        if (message.match(/\(readfile/)) {
-            if (message.search(/\((readfile ([^)]+)\))/g) >= 0) {
-                message = $.replace(message, '(' + RegExp.$1, $.readFile('./addons/' + RegExp.$2)[0]);
-            }
-        }
-
-        if (message.match(/\(readfilerand/)) {
-            if (message.search(/\((readfilerand ([^)]+)\))/g) >= 0) {
-                var path = RegExp.$2;
-                var path2 = RegExp.$1;
-                var results = $.arrayShuffle($.readFile('./addons/' + path.trim()));
-                message = $.replace(message, '(' + path2.trim(), $.randElement(results));
-            }
-        }
-
         if (message.match(/\(gameinfo\)/)) {
             if ($.getGame($.channelName) == ' ' || $.getGame($.channelName) == '') {
                 message = $.replace(message, '(gameinfo)', $.lang.get('streamcommand.game.no.game'));
@@ -355,6 +355,16 @@
             return null;
         }
 
+        if (message.match(/\(math (.*)\)/)) {
+            var mathStr = message.match(/\(math (.*)\)/)[1].replace(/\s/g, '');
+
+            if (mathStr.length === 0) {
+                return null;
+            }
+
+            message = $.replace(message, message.match(/\(math (.*)\)/)[0], String(eval(mathStr)));
+        }
+
         if (message.match(/\(writefile .+\)/)) {
             if (message.match(/\(writefile (.+), (.+), (.+)\)/)) {
                 var file = message.match(/\(writefile (.+), (.+), (.+)\)/)[1],
@@ -372,7 +382,6 @@
             var m = message.match(/\(encodeurl ([\w\W]+)\)/);
             message = $.replace(message, m[0], encodeURI(m[1]));
         }
-
 
         if (message.match(/\(math (.*)\)/)) {
             var mathStr = message.match(/\(math (.*)\)/)[1].replace(/\s/g, '');
