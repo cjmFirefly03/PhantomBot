@@ -159,7 +159,7 @@
                             "        <input type=\"number\" min=\"-1\" class=\"input-control\" id=\"inlineGroupPointsEdit_" + groupName + "\"" +
                             "               value=\"" + groupPoints + "\" style=\"width: 5em\"/>" +
                             "        <button type=\"button\" class=\"btn btn-default btn-xs\"" +
-                            "               onclick=\"$.updateGroupPoints('" + groupName + "', true, false)\"><i class=\"fa fa-pencil\" />" +
+                            "               onclick=\"$.updateGroupPoints('" + groupName + "', true, false)\"><i class=\"fa fa-hdd-o\" />" +
                             "        </button>" +
                             "    </form></td>";
 
@@ -199,7 +199,7 @@
                             "        <input type=\"number\" min=\"-1\" class=\"input-control\" id=\"inlineGroupPointsOfflineEdit_" + groupName + "\"" +
                             "               value=\"" + groupPoints + "\" style=\"width: 5em\"/>" +
                             "        <button type=\"button\" class=\"btn btn-default btn-xs\"" +
-                            "               onclick=\"$.updateGroupPoints('" + groupName + "', false, false)\"><i class=\"fa fa-pencil\" />" +
+                            "               onclick=\"$.updateGroupPoints('" + groupName + "', false, false)\"><i class=\"fa fa-hdd-o\" />" +
                             "        </button>" +
                             "    </form></td>";
 
