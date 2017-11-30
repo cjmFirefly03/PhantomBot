@@ -304,7 +304,7 @@
     * @function giveAll
     * @param {Number} action
     */
-    function giveAll(amount) {
+    function giveAll(amount, sender) {
         if (amount < 0) {
             $.say($.whisperPrefix(sender) + $.lang.get('pointsystem.add.error.negative', pointNameMultiple));
             return;
