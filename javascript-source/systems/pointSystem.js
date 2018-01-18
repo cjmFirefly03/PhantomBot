@@ -9,8 +9,8 @@
         onlineGain = $.getSetIniDbNumber('pointSettings', 'onlineGain', 1),
         offlineGain = $.getSetIniDbNumber('pointSettings', 'offlineGain', 1),
         onlinePayoutInterval = $.getSetIniDbNumber('pointSettings', 'onlinePayoutInterval', 10),
-        offlinePayoutInterval = $.getSetIniDbNumber('pointSettings', 'offlinePayoutInterval',  0),
-        activeBonus = $.getSetIniDbNumber('pointSettings', 'activeBonus',  0),
+        offlinePayoutInterval = $.getSetIniDbNumber('pointSettings', 'offlinePayoutInterval', 0),
+        activeBonus = $.getSetIniDbNumber('pointSettings', 'activeBonus', 0),
         lastPayout = 0,
         penaltys = [],
         pointsBonus = false,
@@ -72,8 +72,8 @@
             $.registerChatSubcommand(newName, 'resetall', 1);
             $.registerChatSubcommand(newName, 'setmessage', 1);
             $.registerChatSubcommand(newName, 'setactivebonus', 1);
-        } 
-        
+        }
+
 
         if (newName2 && newCommand && !$.commandExists(newName2)) {
             $.registerChatCommand('./systems/pointSystem.js', newName2, 7);
@@ -238,8 +238,8 @@
     };
 
     /**
-    * @function setPenalty
-    */
+     * @function setPenalty
+     */
     function setPenalty(sender, username, time, silent) {
         if (!username || !time) {
             if (!silent) {
@@ -251,7 +251,10 @@
         var newTime = (time * 6e4) + $.systemTime();
         username = username.toLowerCase();
 
-        penaltys.push({user: username, time: newTime});
+        penaltys.push({
+            user: username,
+            time: newTime
+        });
 
         if (!silent) {
             time = $.getTimeStringMinutes((time * 6e4) / 1000);
@@ -260,9 +263,9 @@
     };
 
     /**
-    * @function getUserPenalty
-    * @param username
-    */
+     * @function getUserPenalty
+     * @param username
+     */
     function getUserPenalty(username) {
         for (var i in penaltys) {
             if (penaltys[i].user.equalsIgnoreCase(username)) {
@@ -273,10 +276,10 @@
     };
 
     /**
-    * @function setTempBonus
-    * @param {Number} amount
-    * @param {Number} time
-    */
+     * @function setTempBonus
+     * @param {Number} amount
+     * @param {Number} time
+     */
     function setTempBonus(amount, time) {
         var newTime = (time * 6e4);
         if (!amount || !time) {
@@ -301,9 +304,9 @@
     };
 
     /**
-    * @function giveAll
-    * @param {Number} action
-    */
+     * @function giveAll
+     * @param {Number} action
+     */
     function giveAll(amount, sender) {
         if (amount < 0) {
             $.say($.whisperPrefix(sender) + $.lang.get('pointsystem.add.error.negative', pointNameMultiple));
@@ -320,9 +323,9 @@
     };
 
     /**
-    * @function takeAll
-    * @param {Number} action
-    */
+     * @function takeAll
+     * @param {Number} action
+     */
     function takeAll(amount, sender) {
         if (amount < 0) {
             $.say($.whisperPrefix(sender) + $.lang.get('pointsystem.take.error.negative', pointNameMultiple));
@@ -865,7 +868,7 @@
         $.registerChatSubcommand('points', 'setactivebonus', 1);
 
         if (pointNameSingle != 'point' || pointNameMultiple != 'points') {
-           updateSettings();
+            updateSettings();
         }
     });
 
