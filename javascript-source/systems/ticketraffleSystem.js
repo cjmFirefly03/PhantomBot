@@ -162,6 +162,7 @@
         for (var i = 0; i < times; i++) {
             entries.push(user);
         }
+        $.say($.whisperPrefix(user) + $.lang.get('ticketrafflesystem.tickets.bought', times, t + times));
     };
 
     function incr(user, times) {

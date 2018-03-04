@@ -46,8 +46,11 @@
 			$.say($.lang.get('gambling.lost', $.resolveRank(sender), range, $.getPointsString(amount), $.getPointsString($.getUserPoints(sender) - amount), $.gameMessages.getLose(sender, 'gamble')));
 			$.inidb.decr('points', sender, amount);
 		} else {
-			winSpot = (range - winRange + 1); 
-            winnings = Math.floor(amount + ((amount + winSpot) * gain));
+            winnings = Math.floor(amount * gain);
+            if (range >= 99) {
+            	winnings = winnings * 3;
+			}
+			winnings = amount + winnings;
 			$.say($.lang.get('gambling.won', $.resolveRank(sender), range, $.getPointsString(winnings), $.getPointsString($.getUserPoints(sender) + (winnings - amount)), $.gameMessages.getWin(sender, 'gamble')));
 			$.inidb.decr('points', sender, amount);
 			$.inidb.incr('points', sender, winnings);

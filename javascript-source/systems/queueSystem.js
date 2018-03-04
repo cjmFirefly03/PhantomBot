@@ -75,7 +75,7 @@
 	 */
 	function join(username, action, command) {
 		if (queue[username] !== undefined) {
-			$.say($.whisperPrefix(username) + $.lang.get('queuesystem.join.error.joined'));
+			$.say($.whisperPrefix(username) + $.lang.get('queuesystem.join.error.joined', queue[username].position));
 			$.returnCommandCost(username, command, $.isMod(username));
 			return;
 		} else if (info.size !== 0 && (info.size <= Object.keys(queue).length)) {
@@ -96,6 +96,7 @@
 
 		var temp = { 'tag' : String((action === undefined ? '' : action)), 'time': String(date(new Date(), true)), 'position': String(Object.keys(queue).length), 'username': String(username) };
 		$.inidb.set('queue', username, JSON.stringify(temp));
+		$.say($.lang.get('queuesystem.position.self', queue[username].position, date(queue[username].time)));
 	}
 
 	/*
@@ -105,16 +106,21 @@
 	 * @param {String} action
 	 */
 	function remove(username, action) {
+		var prefix = $.whisperPrefix(username);
+		if (username === action) {
+			prefix = '';
+		}
 		if (action === undefined) {
-			$.say($.whisperPrefix(username) + $.lang.get('queuesystem.remove.usage'));
+			$.say(prefix + $.lang.get('queuesystem.remove.usage'));
 			return;
 		} else if (queue[action.toLowerCase()] === undefined) {
-			$.say($.whisperPrefix(username) + $.lang.get('queuesystem.remove.404'));
+			$.say(prefix + $.lang.get('queuesystem.remove.404'));
 			return;
 		}
 
 		delete queue[action.toLowerCase()];
-		$.say($.whisperPrefix(username) + $.lang.get('queuesystem.remove.removed', action));
+        $.inidb.del('queue', action.toLowerCase());
+        $.say(prefix + $.lang.get('queuesystem.remove.removed', action));
 	}
 
 	/*
@@ -298,7 +304,7 @@
 			action = args[0],
 			subAction = args[1];
 
-		if (command.equalsIgnoreCase('queue')) {
+		if (command.equalsIgnoreCase('queueadmin')) {
 			if (action === undefined) {
 				$.say($.whisperPrefix(sender) + $.lang.get('queuesystem.usage'));
 				return;
@@ -333,63 +339,72 @@
 			}
 
 			/*
-			 * @commandpath queue list - Gives you the current queue list. Note that if the queue list is very long it will only show the first 5 users in the queue.
-			 */
-			else if (action.equalsIgnoreCase('list')) {
-				list(sender);
-			}
-
-			/*
-			 * @commandpath queue next [amount] - Shows the players that are to be picked next. Note if the amount is not specified it will only show one.
-			 */
-			else if (action.equalsIgnoreCase('next')) {
-				next(sender, subAction);
-			}
-
-			/*
 			 * @commandpath queue pick [amount] - Picks the players next in line from the queue. Note if the amount is not specified it will only pick one.
 			 */
 			else if (action.equalsIgnoreCase('pick')) {
 				pick(sender, subAction);
-			}
-
-			/*
-			 * @commandpath queue position [username] - Tells what position that user is in the queue and at what time he joined.
-			 */
-			else if (action.equalsIgnoreCase('position')) {
-				position(sender, subAction);
-			}
-
-			/*
-			 * @commandpath queue info - Gives you the current information about the queue that is opened
-			 */
-			else if (action.equalsIgnoreCase('info')) {
-				stats(sender);
 			}
 		}
 
 		/*
 		 * @commandpath joinqueue [gamertag] - Adds you to the current queue. Note that the gamertag part is optional.
 		 */
-		if (command.equalsIgnoreCase('joinqueue')) {
-			join(sender, args.join(' '), command);
+		if (command.equalsIgnoreCase('queue')) {
+
+		    if (action === undefined) {
+                join(sender, args.join(' '), command);
+            }
+			/*
+			 * @commandpath queue list - Gives you the current queue list. Note that if the queue list is very long it will only show the first 5 users in the queue.
+			 */
+        	else if (action.equalsIgnoreCase('list')) {
+                list(sender);
+            }
+
+			/*
+			 * @commandpath queue position [username] - Tells what position that user is in the queue and at what time he joined.
+			 */
+        	else if (action.equalsIgnoreCase('position')) {
+                position(sender, subAction);
+            }
+
+			/*
+			 * @commandpath queue info - Gives you the current information about the queue that is opened
+			 */
+            else if (action.equalsIgnoreCase('info')) {
+                stats(sender);
+            }
+
+            /*
+             * @commandpath queue next [amount] - Shows the players that are to be picked next. Note if the amount is not specified it will only show one.
+             */
+            else if (action.equalsIgnoreCase('next')) {
+                next(sender, subAction);
+            }
+            else if (action.equalsIgnoreCase('leave')) {
+				remove(sender, sender);
+			}
+            else {
+                join(sender, args.join(' '), command);
+            }
 		}
 	});
 
 	$.bind('initReady', function() {
 		if ($.bot.isModuleEnabled('./systems/queueSystem.js')) {
-			$.registerChatCommand('./systems/queueSystem.js', 'joinqueue', 7);
 			$.registerChatCommand('./systems/queueSystem.js', 'queue', 7);
+			$.registerChatCommand('./systems/queueSystem.js', 'queueadmin', 7);
 
-			$.registerChatSubcommand('queue', 'open', 1);
-			$.registerChatSubcommand('queue', 'close', 1);
-			$.registerChatSubcommand('queue', 'clear', 1);
-			$.registerChatSubcommand('queue', 'remove', 1);
-			$.registerChatSubcommand('queue', 'pick', 1);
+			$.registerChatSubcommand('queueadmin', 'open', 1);
+			$.registerChatSubcommand('queueadmin', 'close', 1);
+			$.registerChatSubcommand('queueadmin', 'clear', 1);
+			$.registerChatSubcommand('queueadmin', 'remove', 1);
+			$.registerChatSubcommand('queueadmin', 'pick', 1);
 			$.registerChatSubcommand('queue', 'list', 7);
 			$.registerChatSubcommand('queue', 'next', 7);
 			$.registerChatSubcommand('queue', 'info', 7);
 			$.registerChatSubcommand('queue', 'position', 7);
+			$.registerChatSubcommand('queue', 'leave', 7);
 		}
 	});
 

@@ -20,3 +20,4 @@ $.lang.register('ticketrafflesystem.auto.msginterval.set', 'Message interval set
 $.lang.register('ticketrafflesystem.auto.msg.set', 'Message set to $1.');
 $.lang.register('ticketrafflesystem.auto.msg.usage', 'Usage: !traffle autoannouncemessage [amount in minutes]');
 $.lang.register('ticketrafflesystem.auto.msginterval.usage', 'Usage: !traffle autoannounceinterval [amount in minutes]');
+$.lang.register('ticketrafflesystem.tickets.bought', 'You have purchased $1 ticket(s). You have a total of $2 tickets entered in this raffle');
